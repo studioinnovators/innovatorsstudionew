@@ -1,0 +1,361 @@
+{% extends 'eduPlatform/base.html' %}
+
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+{% endblock %}
+
+{% block body %}
+
+<style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:900&display=swap');    
+
+    body {
+
+        margin: 0px;
+        padding: 0px;
+        font-family: 'Open Sans', sans-serif;
+        overflow-x: hidden;
+    }
+
+    .navItem {
+        font-size: 16px;
+    }
+
+    .nav-side-menu {
+        text-align: center;
+        overflow: auto;
+        font-family: verdana;
+        font-size: 14px;
+        font-weight: 200;
+        background-color: #2e353d;
+        position: absolute;
+        
+        width: 300px;
+        
+        color: #e1ffff;
+    }
+
+    .nav-side-menu .brand {
+        background-color: #23282e;
+        line-height: 50px;
+        display: block;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .nav-side-menu .toggle-btn {
+        display: none;
+    }
+
+    .nav-side-menu ul,
+    .nav-side-menu li {
+        list-style: none;
+        padding: 0px;
+        margin: 0px;
+        line-height: 35px;
+        cursor: pointer;
+        /*    
+    .collapsed{
+       .arrow:before{
+                 font-family: FontAwesome;
+                 content: "\f053";
+                 display: inline-block;
+                 padding-left:10px;
+                 padding-right: 10px;
+                 vertical-align: middle;
+                 float:right;
+            }
+     }
+*/
+    }
+
+    .nav-side-menu ul :not(collapsed) .arrow:before,
+    .nav-side-menu li :not(collapsed) .arrow:before {
+        font-family: FontAwesome;
+        content: "\f078";
+        display: inline-block;
+        padding-left: 10px;
+        padding-right: 10px;
+        vertical-align: middle;
+
+    }
+
+    .nav-side-menu ul .active,
+    .nav-side-menu li .active {
+        border-left: 3px solid #d19b3d;
+        background-color: #4f5b69;
+    }
+
+    .nav-side-menu ul .sub-menu li.active,
+    .nav-side-menu li .sub-menu li.active {
+        color: #d19b3d;
+    }
+
+    .nav-side-menu ul .sub-menu li.active a,
+    .nav-side-menu li .sub-menu li.active a {
+        color: #d19b3d;
+    }
+
+    .nav-side-menu ul .sub-menu li,
+    .nav-side-menu li .sub-menu li {
+        background-color: #181c20;
+        border: none;
+        line-height: 28px;
+        border-bottom: 1px solid #23282e;
+        margin-left: 0px;
+    }
+
+    .nav-side-menu ul .sub-menu li:hover,
+    .nav-side-menu li .sub-menu li:hover {
+        background-color: #020203;
+    }
+
+    .nav-side-menu ul .sub-menu li:before,
+    .nav-side-menu li .sub-menu li:before {
+        font-family: FontAwesome;
+        content: "\f105";
+        display: inline-block;
+        padding-left: 10px;
+        padding-right: 10px;
+        vertical-align: middle;
+    }
+
+    .nav-side-menu li {
+        padding-left: 0px;
+        border-left: 3px solid #2e353d;
+        border-bottom: 1px solid #23282e;
+    }
+
+    .nav-side-menu li a {
+        text-decoration: none;
+        color: #e1ffff;
+    }
+
+    .nav-side-menu li a i {
+        padding-left: 10px;
+        width: 20px;
+        padding-right: 20px;
+    }
+
+    .nav-side-menu li:hover {
+        border-left: 3px solid #d19b3d;
+        background-color: #4f5b69;
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+        transition: all 1s ease;
+    }
+
+    .btn1{
+        font-family: 'Red Hat Display', sans-serif;
+        padding: 10px 10px;
+        background-color: white;
+        border-radius: 8%;
+        color: black;
+    }
+    .btn1:hover {
+        color: white;
+        background-color: black;
+    }
+
+    @media (max-width: 1200px) {
+        .nav-side-menu {
+            position: relative;
+            width: 100%;
+            top: 0;
+            margin-bottom: 10px;
+            height: inherit;
+        }
+
+        .nav-side-menu .toggle-btn {
+            display: block;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            z-index: 10 !important;
+            padding: 3px;
+            background-color: #ffffff;
+            color: #000;
+            width: 40px;
+            text-align: center;
+        }
+
+        .brand {
+            text-align: left !important;
+            font-size: 22px;
+            padding-left: 20px;
+            line-height: 50px !important;
+        }
+
+        .combine{
+            text-align: center;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .nav-side-menu .menu-list .menu-content {
+            display: block;
+        }
+
+        .mobile-only {
+            display: none;
+        }
+
+        .desktop-only {
+            display: block;
+        }
+
+        .combine {
+
+            display: flex;
+            flex-direction: row;
+            padding-left: 300px;
+            width: 100%;
+        }
+
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+
+    @media (max-height:250px) {
+        .social_media {
+            display: none !important;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <img src="{% static 'eduPlatform/images/livetrainingcarousel.png' %}"
+        style="width: 100%;">
+    <div class="nav-side-menu">
+        <div class="brand">Led/Live Training</div>
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+        <div class="menu-list">
+
+            <ul id="menu-content" class="menu-content collapse out">
+                <li>
+                    <a href="{% url 'aboutUs' %}">About Innovator's Studio
+                    </a>
+                </li>
+                <li data-toggle="collapse" data-target="#products" class="collapsed ">
+                    <a href="{% url 'livetraining' %}">LED/LIVE Training</a>
+                </li>
+                <li data-toggle="collapse" data-target="#new" class="collapsed">
+                    <a href="{% url 'inofficeprogram' %}"> IN-Office Program </a>
+                </li>
+                <li data-toggle="collapse" data-target="#new" class="collapsed">
+                    <a href="{% url 'blogs' %}">Blogs</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="combine">
+        <section class=" desktop-only" data-aos="slide-up">
+            <p style="font-size:20px;padding-left: 20px;">Innovator’s Studio mission is to change the world by sharing
+                the
+                knowledge of innovators. That might be most apparent with our live online events, where you get to
+                engage with
+                the industry’s most pioneering experts and glean all the knowledge from them that you can.</p>
+            <div class="col-lg-8 float:left">
+                <p class="font-weight-bold" style="font-size:30px; font-family:Arial, Helvetica, sans-serif; font-weight:700"">Live online training courses</p>
+                <p style="font-size: 15px;">Get intensive hands-on training in critical tech and business topics—led by
+                    instructor’s Studio from the renowned Innovators network of innovators and expert practitioners. A
+                    limited
+                    number of available seats provide a more personal level of instruction. And yes, they’ll take your
+                    questions.
+                </p>
+            </div>
+            <div class="col-lg-4 mx-auto d-block" style="padding-top: 10px;">
+                <img src="{% static 'eduPlatform/images/LiveOnlineTrainingNew.png' %}"
+                    style="height: 300px;">
+            </div>
+
+        </section>
+
+    </div>
+    <div class="combine py-3">
+        <section class=" desktop-only" data-aos="slide-up">
+            <div class="col-lg-4 mx-auto d-block" style="padding-top: 10px;">
+                <img src="{% static 'eduPlatform/images/superstreamvirtualeventNew.png' %}"
+                    style="height: 300px;">
+            </div>
+
+            <div class="col-lg-8 float:left">
+                <p class="font-weight-bold" style="font-size:30px; font-family:Arial, Helvetica, sans-serif; font-weight:700"">Superstream virtual events</p>
+                <p style="font-size: 15px;">Superstreams are like bite-size tech conferences beamed exclusively to
+                    O’Reilly
+                    members. Each event day in a Superstream series covers different topics, with unique sessions
+                    lasting no more
+                    than four hours. So you get a lot of expert insight in a little time.</p>
+            </div>
+
+        </section>
+
+    </div>
+    <div class="combine py-3">
+        <section class=" desktop-only" data-aos="slide-up">
+            <div class="col-lg-8 float:left">
+                <p class="font-weight-bold" style="font-size:30px; font-family:Arial, Helvetica, sans-serif; font-weight:700"">Expert-led conversations</p>
+                <p style="font-size: 15px;">Leaders from the pinnacle of their industry come to share their insights and
+                    engage
+                    with Innovator’s members. It could be topical, technical, or focused on current events. But it’s
+                    always
+                    fascinating. Each conversation includes plenty of opportunities for these renowned leaders to answer
+                    your questions—live.</p>
+            </div>
+            <div class="col-lg-4 mx-auto d-block" style="padding-top: 10px;">
+                <img src="{% static 'eduPlatform/images/ExpertLedConversations.png' %}"
+                    style="height: 300px;">
+            </div>
+
+        </section>
+
+    </div>
+    <div class="combine">
+        <section class=" desktop-only" data-aos="slide-up">
+            <div class="col-lg-4 mx-auto d-block" style="padding-top: 10px; padding-bottom: 20px;">
+                <img src="{% static 'eduPlatform/images/ArchitecturalInnovatorsNew.png' %}"
+                    style="height: 300px;">
+            </div>
+
+            <div class="col-lg-8 float:left">
+                <p class="font-weight-bold" style="font-size:30px; font-family:Arial, Helvetica, sans-serif; font-weight:700"">Architectural Innovator’s Studio challenge </p>
+                <p style="font-size: 15px;">Game on! Whether you’re joining a team or just want to watch, Architectural
+                    is an
+                    incredible learning opportunity. An all-star lineup of judges join Innovator’s Community to give
+                    feedback and
+                    pick the team with the winning architecture solution that best solves a real problem for an
+                    organization
+                    working for social good..</p>
+                    <a href="{% url 'signup' %}"><button class="btn1">Know More</button></a>
+            </div>
+
+        </section>
+
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            offset: 200,
+            duration: 1000,
+            transition: 1
+        });
+    </script>
+
+    {% endblock %}

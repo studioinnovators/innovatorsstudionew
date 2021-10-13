@@ -1,0 +1,336 @@
+{% extends 'eduPlatform/base.html' %}
+
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'eduPlatform/css/index.css' %}">
+<link rel="stylesheet" href="{% static 'eduPlatform/css/courseCardSlider.css' %}">
+{% endblock %}
+
+{% block body %}
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:900&display=swap');
+
+    .heading {
+        font-family: 'Red Hat Display', sans-serif;
+        display: flex;
+        justify-content: center;
+        transition: 0.5s ease-in-out;
+    }
+
+    .slider:hover .heading {
+        transform: scale(1.1);
+
+    }
+
+    .container2 {
+        border-style: dashed;
+        border-color: #e6b31e;
+        transition: 2s ease-in-out;
+    }
+
+    .container2:hover{
+        border-style: solid;
+    }
+
+    .container2:hover .freedemoclass{
+        transform: scale(1.1)
+    }
+
+    .freedemoclass {
+        margin: 0;
+        font-family: 'Red Hat Display', sans-serif;
+        background-size: 40%;
+        background-position: 50% 50%;
+        color: black;
+        transition: 0.5s ease-in-out;
+    }
+
+    .register {
+        color: black;
+        background-color: white;
+        font-family: 'Red Hat Display', sans-serif;
+        border-style: double;
+        border-color: #e6b31e;
+        font-weight: 300;
+        border-width: 2px;
+        border-radius: 5%;
+        padding: 10px 10px;
+    }
+
+    .register:hover {
+        color: white;
+        border: none;
+        background-color: black;
+    }
+
+    @keyframes zoomout {
+        from {
+            background-size: 40%;
+        }
+
+        to {
+            background-size: 10%;
+        }
+    }
+
+    .ourlearner {
+        justify-content: center;
+        position: relative;
+    }
+
+    /* Make the image responsive */
+    .ourlearner img {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Style the button and place it in the middle of the container/image */
+    .ourlearner .btn1 {
+        position: absolute;
+        top: 59%;
+        left: 28%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color: #2867B2;
+        color: white;
+        font-size: 100%;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+
+    .ourlearner .btn1:hover {
+        background-color: rgb(0, 162, 255);
+    }
+
+    .container1 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .container1:hover {
+        cursor: pointer;
+    }
+
+    .container1 img {
+        filter: grayscale();
+        width: 250px;
+        height: 150px;
+
+        margin-bottom: 1rem;
+        transition: 0.4s ease-in-out;
+    }
+
+    .container1 img:hover {
+        filter: none;
+        transform: scale(1.2);
+    }
+
+    .container1:hover .title::after {
+        width: 100%;
+        left: 0;
+    }
+
+    @media only screen and (max-width: 1200px) {
+        .youtubereviews {
+            display: none;
+        }
+    }
+
+    @media only screen and (max-width: 750px) {
+        .ourlearner .btn1 {
+            padding: 0px;
+            border-radius: 0%;
+            font-size: 75%;
+        }
+
+        .container1 {
+            filter: none;
+            display: flex;
+        }
+    }
+</style>
+<!-- carousel section -->
+<section id="carouselSection">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                {% for carousel in carousels|slice:":1" %}
+                <a target="_blank" href={{carousel.link}}><img src="/media/{{carousel.image}}" class="d-block w-100"
+                    alt="..."></a>
+                {% endfor %}
+            </div>
+            {% for carousel in carousels|slice:"1:" %}
+            <div class="carousel-item">
+                <a target="_blank" href={{carousel.link}}><img src="/media/{{carousel.image}}" class="d-block w-100" alt="..."></a>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+<!-- Search bar -->
+<div id="searchCourses" class="d-none d-md-block">
+    <form action="" method="POST" class="input-group">
+        {% csrf_token %}
+        <input type="text" class="searchInput shadow p-2" placeholder="Search Courses" aria-label="Serach Courses"
+            aria-describedby="searchbtn" name="search-query">
+        <button class="btn btn-dark" type="submit" id="searchbtn"><i class="bi bi-search"></i></button>
+    </form>
+</div>
+
+{% if topcourses|length > 4 %}
+<section class="my-5">
+    <h1 class="container"><span class="text-golden">Golden</span> Courses</h1>
+    <hr class="headingUnderline">
+    {% with courses=topcourses %}
+    {% with colorclass="goldencolorClass" %}
+    {% include 'eduPlatform/courseCardSlider.html' %}
+    {% endwith %}
+    {% endwith %}
+    <div class="d-flex justify-content-center viewAllCourse">
+        <a href="{% url 'allMinicourses' %}" class=" py-2 px-3 rounded">View All Courses <i
+                class="bi bi-arrow-right"></i></a>
+    </div>
+</section>
+{% endif %}
+
+<section class="slider my-5">
+    <h1 class="container heading">Package Courses</h1>
+    <hr class="headingUnderline">
+    {% with courses=fullcourses %}
+    {% with colorclass="fullcourseclass" %}
+    {% if fullcourses|length > 4 %}
+    {% include 'eduPlatform/courseCardSlider.html' %}
+    {% else %}
+    <h3>No Package course yet</h3>
+    {% endif %}
+    {% endwith %}
+    {% endwith %}
+    <div class="d-flex justify-content-center">
+        <a href="{% url 'allFullcourses' %}"><button class="register">View More <i
+                    class="fas fa-arrow-right"></i></button></a>
+    </div>
+</section>
+
+<div class="container2">
+    <div class="freedemoclass text-center my-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <!-- Button trigger modal -->
+        <h1>CLICK HERE TO GET A FREE DEMO</h1>
+    </div>
+</div>
+
+<section class="slider my-5">
+    <h1 class="container heading">Mini Courses</h1>
+    <hr class="headingUnderline">
+    {% with courses=minicourses %}
+    {% with colorclass="minicourseclass" %}
+    {% include 'eduPlatform/courseCardSlider.html' %}
+    {% endwith %}
+    {% endwith %}
+    <div class="d-flex justify-content-center">
+        <a href="{% url 'allMinicourses' %}"><button class="register">View More <i
+                    class="fas fa-arrow-right"></i></button></a>
+    </div>
+</section>
+
+<section class="slider my-5">
+    <h1 class="container heading">Personal Development Courses</h1>
+    <hr class="headingUnderline">
+    {% with courses=pdpcourses %}
+    {% with colorclass="pdpcourseclass" %}
+    {% include 'eduPlatform/courseCardSlider.html' %}
+    {% endwith %}
+    {% endwith %}
+    <div class="d-flex justify-content-center">
+        <a href="{% url 'allPDPcourses' %}"><button class="register">View More <i
+                    class="fas fa-arrow-right"></i></button></a>
+    </div>
+</section>
+
+<!-- <section id="alumniPlaced" class="mt-5 p-0">
+    <h1 class="mx-5">Our Alumni Working At..</h1>
+    <hr class="headingUnderline">
+</section> -->
+
+<div class="carousel ourlearner my-5 p-0 mx-5 slider">
+    <h1 class="heading mx-0 mx-lg-5">Our Learners</h1>
+    <hr class="headingUnderline">
+    <div class="row">
+        <div class="col youtubereviews md-5 allign-items-center">
+            {% for video in youtubevideos%}
+            <iframe width="700" height="250" src="{{video.link}}" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            {% endfor %}
+            <div class="d-flex justify-content-center">
+                <a href="https://www.youtube.com/embed/m_jF0S3_Euo"><button class="register">More Reviews <i
+                            class="fas fa-arrow-right"></i></button></a>
+            </div>
+        </div>
+        <div class="col md-7">
+            <div id="carouselExampleControls" class="carousel-slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static 'eduPlatform/images/StudentReview1.png' %}" class="d-block w-100" alt="...">
+                        <h5 class="mx-lg-5 mx-0 text-center viewAllCourse"><a
+                                href="https://www.linkedin.com/in/harbind-singh/" target="_blank"
+                                class="btn1 btn-outline-warning">
+                                <i class="fab fa-linkedin"></i></a></h5>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'eduPlatform/images/StudentReview2.png' %}" class="d-block w-100" alt="...">
+                        <h5 class="mx-lg-5 mx-0 text-center viewAllCourse"><a
+                                href="https://www.linkedin.com/in/akash-tikkiwal-508669191/"
+                                class="btn1 btn-outline-warning">
+                                <i class="fab fa-linkedin"></i></a></h5>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static 'eduPlatform/images/StudentReview3.png' %}" class="d-block w-100" alt="...">
+                        <h5 class="mx-lg-5 mx-0 text-center viewAllCourse"><a
+                                href="https://www.linkedin.com/in/deepika-singh-576a13146/"
+                                class="btn1 btn-outline-warning">
+                                <i class="fab fa-linkedin"></i></a></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="slider">
+    <h1 class="heading mx-0 mx-lg-5">Industry Partners</h1>
+    <hr class="headingUnderline">
+    <div class="container1 container d-flex align-items-center">
+        <div class="row">
+            {% for industrypartner in industrypartners %}
+            <div class="col-md-3 mx-0">
+                <a target="_blank" href={{industrypartner.link}}><img src="/media/{{industrypartner.image}}"></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src="{% static 'eduPlatform/js/goldenCourseCardSlider.js' %}"></script>
+<script src="{% static 'eduPlatform/js/fullcourseSlider.js' %}"></script>
+<script src="{% static 'eduPlatform/js/minicourseSlider.js' %}"></script>
+<script src="{% static 'eduPlatform/js/pdpcourseSlider.js' %}"></script>
+
+{% endblock %}

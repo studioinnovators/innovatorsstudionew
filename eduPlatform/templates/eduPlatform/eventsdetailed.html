@@ -1,0 +1,107 @@
+{% extends 'eduPlatform/base.html' %}
+
+{% load static %}
+
+{% block links %}
+
+{% endblock %}
+
+
+{% block body %}
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:900&display=swap');
+
+    .poster {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .register{
+        display: flex;
+        justify-content: center;
+    }
+    .register .btn {
+        font-size:18px;
+        border: solid .5px;
+        border-color:#e6b31e ;
+        margin-top: 15px;
+        border-radius: 5%;
+        padding: 15px 40px;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
+        transition:.4s ease-in-out;
+    }
+
+    .register .btn:hover {
+        color:white;
+        background-color:#e6b31e ;
+    }
+
+    .container2 {
+        border-style: dashed;
+        border-color: #e6b31e;
+        font-family: 'Red Hat Display', sans-serif;
+    }
+
+    .freedemoclass {
+        margin: 0;
+        font-family: 'Red Hat Display', sans-serif;
+    }
+</style>
+
+<div class="text text-center">
+    <h1>{{event1.title}}</h1>
+</div>
+<hr class="headingUnderline">
+<div class="poster container">
+    {% if event1.poster %}
+    <img src="/media/{{event1.poster}}" class="img-fluid" width="100%">
+    {% else %}
+    <img src="/media/{{event1.thumbnail}}" class="img-fluid" width="100%">
+    {% endif %}
+</div>
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="container2">
+            <div class="freedemoclass text-center my-4">
+                <!-- Button trigger modal -->
+                <h1>ABOUT THE EVENT</h1>
+            </div>
+        </div>
+        <div class="row align-items-center text-center">
+            <p>{{event1.description|linebreaks}}</p>
+        </div>
+        <div class="container2">
+            <div class="freedemoclass text-center my-4">
+                <!-- Button trigger modal -->
+                <h1>ABOUT THE SPEAKER</h1>
+            </div>
+        </div>
+        <div class="row">
+            {% if event1.image_speaker %}
+            <div class="col md-3">
+                <img src="/media/{{event1.image_speaker}}" class="img-fluid">
+            </div>
+            <div class="col md-9">
+                <p>{{event1.about_speaker|linebreaks}}</p>
+            </div>
+            {% else %}
+            <div class="col">
+                <p>{{event1.about_speaker|linebreaks}}</p>
+            </div>
+            {% endif %}
+        </div> 
+        <hr class="headingUnderline">
+
+        <div class="register">
+            <a href="{% url 'eventregistration' event1.title %}" class="btn">Register</a>
+        </div>  
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}

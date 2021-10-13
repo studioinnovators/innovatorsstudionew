@@ -1,0 +1,53 @@
+{% extends 'eduPlatform/base.html' %}
+
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'eduPlatform/css/blogs.css' %}">
+{% endblock %}
+
+{% block body %}
+<style>
+  .card{
+    border-style: double;
+    border-color: #e6b31e;
+  }
+  .card:hover .image {
+    transform: scale(1.1);
+    transition: 0.5s ease-in-out;
+  }
+</style>
+
+{% for blog in blogs %}
+<div class="card my-3">
+  <div class="row align-items-center">
+    <div class="col-md-4 image">
+      <a href="{% url 'blogsdetailed' blog.id blog.title %}" class="imgCourses mx-auto">
+        <img src="/media/{{blog.img1}}" class="img-fluid"></a>
+    </div>
+    <div class="col-md-8">
+      <h1>{{blog.title}}</h1>
+      <p>{{blog.desc1|slice:":520"}}....</p>
+      <div>
+        <h5><i class="fas fa-user-alt"></i>Blog by {{blog.author}}</h5>
+      </div>
+      <div class="postcard_subtitle small">
+        <time datetime="2020-05-25 12:00:00">
+          <i class="fas fa-calendar-alt"></i>{{blog.date}}
+        </time>
+      </div>
+      <div>
+        <i class="fas fa-eye"></i>{{blog.post_views}}
+      </div>
+      <div class="row align-items-center">
+        <a class="btn btn-outline-warning fluid my-2 align-items-center"
+          href="{% url 'blogsdetailed' blog.id blog.title %}" role="button">Read More<i
+            class="fas fa-angle-right"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+
+{% endblock %}

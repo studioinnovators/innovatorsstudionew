@@ -1,0 +1,109 @@
+{% extends 'eduPlatform/base.html' %}
+
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'eduPlatform/css/blogs.css' %}">
+{% endblock %}
+
+{% block body %}
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:900&display=swap');
+    .author{
+        font-family: 'Red Hat Display', sans-serif;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="left"><a class="btn btn-outline-warning" href="{% url 'blogs' %}" role="button"><i
+                class="fas fa-arrow-left"></i>  Previous</a></div>
+    <div class="center">
+        <h1>{{blog1.title}}</h1>
+    </div>
+    <div class="right"><a class="btn btn-outline-warning" href="{% url 'blogsdetailed' blog2.id blog2.title %}" role="button">Next  <i
+        class="fas fa-arrow-right"></i></a></div>
+</div>
+<hr class="headingUnderline">
+
+<div class="card my-3">
+    <div class="row">
+        <img src="/media/{{blog1.img1}}" class="img-fluid">
+        <div class="row align-items-center text-center">
+            <p>{{blog1.desc1|linebreaks}}</p>
+        </div>
+
+        {% if blog1.desc2 != "" %}
+        {% if blog1.img2 %}
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <img src="/media/{{blog1.img2}}" class="img-fluid">
+            </div>
+            <div class="col-md-8">
+                <p>{{blog1.desc2|linebreaks}}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row align-items-center text-center">
+            <p>{{blog1.desc2|linebreaks}}</p>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if blog1.desc3 != "" %}
+        {% if blog1.img3 %}
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <p>{{blog1.desc3|linebreaks}}</p>
+            </div>
+            <div class="col-md-4">
+                <img src="/media/{{blog1.img3}}" class="img-fluid">
+            </div>
+        </div>
+        {% else %}
+        <div class="row align-items-center text-center">
+            <p>{{blog1.desc3|linebreaks}}</p>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if blog1.desc4 != "" %}
+        {% if blog1.img4 %}
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <img src="/media/{{blog1.img4}}" class="img-fluid">
+            </div>
+            <div class="col-md-8">
+                <p>{{blog1.desc4|linebreaks}}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row align-items-center text-center">
+            <p>{{blog1.desc4|linebreaks}}</p>
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if blog1.desc5 != "" %}
+        {% if blog1.img5 %}
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <p>{{blog1.desc5|linebreaks}}</p>
+            </div>
+            <div class="col-md-4">
+                <img src="/media/{{blog1.img2}}" class="img-fluid">
+            </div>
+        </div>
+        {% else %}
+        <div class="row align-items-center text-center">
+            <p>{{blog1.desc5|linebreaks}}</p>
+        </div>
+        {% endif %}
+        {% endif %}
+        <hr class="headingUnderline">
+        <div class="row text-center author">
+            <h5>This Blog is written by</h5>
+            <h4><i class="fas fa-user"></i> {{blog1.author}}</h4>
+        </div>
+    </div>
+</div>
+{% endblock %}
