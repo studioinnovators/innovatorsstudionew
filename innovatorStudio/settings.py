@@ -26,7 +26,7 @@ SECRET_KEY = '=kd@z5p91omc(pbuqwx187^29)7dey=-lr78%vokwxz@hoiyn7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','innovatorsstudio-kvlc2.ondigitalocean.app','innovatorsstudio.online','www.innovatorsstudio.online','innovatorsstudionew-nw7mz.ondigitalocean.app']
+ALLOWED_HOSTS = ['127.0.0.1','innovatorsstudio.online','www.innovatorsstudio.online','innovatorsstudionew-tbegj.ondigitalocean.app']
 
 
 # Application definition
