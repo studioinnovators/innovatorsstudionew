@@ -9,20 +9,12 @@
 .coursecardlist-container .card {
   height: 100%;
 }
-.coursecardlist-container .card:hover {
-  box-shadow: 0em 0em 0.5em 0em #343434;
-}
+
 .imgCourses {
   overflow: hidden;
   text-decoration: none;
   color: #343434;
 }
-.imgCourses p,
-.imgCourses h5,
-.imgCourses small {
-  color: #343434;
-}
-.imgCourses:hover,
 .imgCourses p,
 .imgCourses h5,
 .imgCourses small {
